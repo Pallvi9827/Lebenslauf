@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pallvi – Portfolio</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Georgia, serif;
+      background: #f5f2eb;
+      color: #1a1a18;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      border-bottom: 2px solid #1D9E75;
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+
+    .top-left h1 {
+      font-size: 2.4rem;
+      font-weight: normal;
+      white-space: nowrap;
+    }
+
+    .top-left .subtitle {
+      font-family: monospace;
+      font-size: 13px;
+      color: #1D9E75;
+      margin: 6px 0 16px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .contact-list {
+      list-style: none;
+      font-size: 14px;
+    }
+
+    .contact-list li {
+      margin-bottom: 4px;
+      color: #555;
+    }
+
+    a {
+      color: #0F6E56;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .qr-box {
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .qr-box p {
+      font-family: monospace;
+      font-size: 10px;
+      color: #888;
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    h2 {
+      font-family: monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #888;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 6px;
+    }
+
+    section {
+      margin-bottom: 36px;
+    }
+
+    .profile p {
+      font-size: 15px;
+      color: #333;
+      max-width: 600px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #ddd;
+      border-left: 4px solid #1D9E75;
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    .card-date {
+      font-family: monospace;
+      font-size: 11px;
+      color: #888;
+      white-space: nowrap;
+      padding-top: 3px;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .card-links {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .card-links a {
+      font-family: monospace;
+      font-size: 12px;
+      border: 1px solid #1D9E75;
+      border-radius: 4px;
+      padding: 3px 10px;
+      color: #0F6E56;
+      background: #f0faf6;
+    }
+
+    .card-links a:hover {
+      background: #d6f5ea;
+      text-decoration: none;
+    }
+
+    .card ul {
+      padding-left: 18px;
+      font-size: 13.5px;
+      color: #444;
+    }
+
+    .card ul li {
+      margin-bottom: 4px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      font-family: monospace;
+      font-size: 11px;
+      background: #e1f5ee;
+      color: #0F6E56;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .row:last-child {
+      border-bottom: none;
+    }
+
+    .row-left strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .row-left span {
+      font-size: 13px;
+      color: #888;
+    }
+
+    .row-date {
+      font-family: monospace;
+      font-size: 12px;
+      color: #888;
+      white-space: nowrap;
+    }
+
+    .row-bullets {
+      margin-top: 8px;
+      padding-left: 18px;
+      font-size: 13.5px;
+      color: #555;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .skill-box {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+
+    .skill-box strong {
+      display: block;
+      font-family: monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #1D9E75;
+      margin-bottom: 4px;
+    }
+
+    .skill-box span {
+      font-size: 13px;
+      color: #555;
+    }
+
+    .lang-row {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .lang-item strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .lang-item span {
+      font-size: 13px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- TOP -->
+  <div class="top">
+    <div class="top-left">
+      <h1>Pallvi</h1>
+      <p class="subtitle">Applied AI Student · Computer Vision &amp; Deep Learning</p>
+
+      <ul class="contact-list">
+        <li>📞 <a href="tel:+4915215802254">+49 152 15802254</a></li>
+        <li>✉️ <a href="mailto:pallvi98726@gmail.com">pallvi98726@gmail.com</a></li>
+        <li>💼 <a href="https://linkedin.com/in/pallvi" target="_blank">LinkedIn</a></li>
+        <li>🐙 <a href="https://github.com/pallvi" target="_blank">GitHub</a></li>
+      </ul>
+    </div>
+
+    <div class="qr-box">
+      <div id="qrcode"></div>
+      <p>Scan for GitHub</p>
+    </div>
+  </div>
+
+  <!-- PROFILE -->
+  <section class="profile">
+    <h2>Profile</h2>
+    <p>
+      Applied AI student at TH Rosenheim with a strong focus on Computer Vision, Deep Learning, and Machine Learning.
+      Currently working as a Student Researcher on real-time object detection. Experienced in building end-to-end ML
+      applications — from model training to cloud deployment. Passionate about solving real problems with AI.
+    </p>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section>
+    <h2>Work Experience</h2>
+
+    <div class="row">
+      <div class="row-left">
+        <strong>Student Researcher — Computer Vision / Deep Learning</strong>
+        <span>Technische Hochschule Rosenheim</span>
+        <ul class="row-bullets">
+          <li>Optimizing a YOLO-based real-time object detection model for wood surface defect localization</li>
+          <li>Developing a computer vision pipeline for color feature extraction, segmentation and instance-wise counting of LEGO components</li>
+          <li>Creating computer vision demos for research applications</li>
+        </ul>
+      </div>
+      <div class="row-date">Present</div>
+    </div>
+
+    <div class="row">
+      <div class="row-left">
+        <strong>Student Tutor — Linear Algebra</strong>
+        <span>Technische Hochschule Rosenheim</span>
+        <ul class="row-bullets">
+          <li>Assisted AI students in understanding mathematical foundations for ML and data science</li>
+          <li>Conducted sessions covering vector spaces, matrices, eigenvalues and linear transformations</li>
+        </ul>
+      </div>
+      <div class="row-date">10/2025 – 02/2026</div>
+    </div>
+
+    <div class="row">
+      <div class="row-left">
+        <strong>Working Student</strong>
+        <span>BabyCode Private Limited</span>
+        <ul class="row-bullets">
+          <li>Developed backend data processing pipelines for AI-based applications</li>
+          <li>Worked with FastAPI REST APIs for user submission handling</li>
+          <li>Assisted in text preprocessing and NLP-based workflows</li>
+        </ul>
+      </div>
+      <div class="row-date">03/2024 – 08/2024</div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section>
+    <h2>Projects</h2>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Potato Disease Classification Web App</div>
+      </div>
+      <ul>
+        <li>End-to-end ML web application to classify potato leaf disease from images</li>
+        <li>Trained a CNN using TensorFlow/Keras</li>
+        <li>Built REST API with FastAPI and deployed full-stack on Render (cloud)</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">TensorFlow</span>
+        <span class="tag">CNN</span>
+        <span class="tag">FastAPI</span>
+        <span class="tag">Render</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Medical RAG Chatbot</div>
+      </div>
+      <ul>
+        <li>RAG-based chatbot for answering medical queries from PDF documents</li>
+        <li>Document processing, chunking and embedding pipeline using LangChain and Sentence Transformers</li>
+        <li>Integrated Pinecone vector database for semantic retrieval</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">LangChain</span>
+        <span class="tag">Pinecone</span>
+        <span class="tag">OpenAI</span>
+        <span class="tag">RAG</span>
+        <span class="tag">Embeddings</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Fashion MNIST Image Generation (GAN)</div>
+      </div>
+      <ul>
+        <li>Developed a GAN to generate Fashion MNIST images from random noise</li>
+        <li>Implemented Generator and Discriminator using CNN in TensorFlow/Keras</li>
+        <li>Custom training loop for adversarial training</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">TensorFlow</span>
+        <span class="tag">GAN</span>
+        <span class="tag">CNN</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Machine Learning From Scratch</div>
+      </div>
+      <ul>
+        <li>Implementing ML algorithms, gradient descent, loss functions and training loops from scratch using NumPy — no Sklearn</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">NumPy</span>
+        <span class="tag">ML Algorithms</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section>
+    <h2>Education</h2>
+    <div class="row">
+      <div class="row-left">
+        <strong>B.Sc. Applied Artificial Intelligence — GPA 1.9</strong>
+        <span>Technische Hochschule Rosenheim · Focus: ML, Deep Learning, Computer Vision, Data Analysis</span>
+      </div>
+      <div class="row-date">2024 – 2028</div>
+    </div>
+    <div class="row">
+      <div class="row-left">
+        <strong>B.Eng. Computer Science — GPA 1.9</strong>
+        <span>Chandigarh University, India · Focus: Programming, OOP, Data Structures</span>
+      </div>
+      <div class="row-date">2022 – 2023</div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section>
+    <h2>Technical Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-box">
+        <strong>ML &amp; Deep Learning</strong>
+        <span>CNN, GAN, NLP, LLM, RAG, PyTorch, TensorFlow, Keras</span>
+      </div>
+      <div class="skill-box">
+        <strong>Computer Vision</strong>
+        <span>YOLO, Image Classification, Segmentation, Feature Extraction</span>
+      </div>
+      <div class="skill-box">
+        <strong>AI Systems</strong>
+        <span>LangChain, Pinecone, Embeddings, Semantic Search, Vector Databases</span>
+      </div>
+      <div class="skill-box">
+        <strong>Backend &amp; APIs</strong>
+        <span>FastAPI, REST APIs, Cloud (AWS/GCP), Render</span>
+      </div>
+      <div class="skill-box">
+        <strong>Data &amp; Analysis</strong>
+        <span>Pandas, NumPy, Matplotlib, Seaborn, ETL, Data Preprocessing</span>
+      </div>
+      <div class="skill-box">
+        <strong>Programming</strong>
+        <span>Python (advanced), Java, C, C++, SQL</span>
+      </div>
+      <div class="skill-box">
+        <strong>Mathematics</strong>
+        <span>Linear Algebra, Optimization, Backpropagation, Statistics</span>
+      </div>
+      <div class="skill-box">
+        <strong>Tools</strong>
+        <span>Git, GitHub, Jupyter, VS Code, Excel</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- LANGUAGES -->
+  <section>
+    <h2>Languages</h2>
+    <div class="lang-row">
+      <div class="lang-item">
+        <strong>English</strong>
+        <span>Fluent</span>
+      </div>
+      <div class="lang-item">
+        <strong>German</strong>
+        <span>Intermediate</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- QR CODE -->
+<script>
+  var meineWebsite = "https://github.com/pallvi";
+
+  new QRCode(document.getElementById("qrcode"), {
+    text: meineWebsite,
+    width: 100,
+    height: 100,
+    colorDark: "#1a1a18",
+    colorLight: "#f5f2eb",
+    correctLevel: QRCode.CorrectLevel.M
+  });
+</script>
+
+</body>
+</html>
